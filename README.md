@@ -1,5 +1,5 @@
 # Indy Node Monitor
-Cloned from [Indicio-tech/indy-node-monitor](https://github.com/Indicio-tech/indy-node-monitor)
+Cloned from [hyperledger/indy-node-monitor](https://github.com/hyperledger/indy-node-monitor)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Lifecycle:Maturing](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
