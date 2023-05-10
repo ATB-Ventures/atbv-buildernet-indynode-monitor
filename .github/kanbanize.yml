@@ -1,0 +1,38 @@
+name: "Kanbanize Integration"
+run-name: "Kanbanize - ${{ github.event_name }} - ${{ github.ref_type }} - ${{ github.ref_name }}"
+
+# Learning: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
+on:
+  # Useful to track creation of a branch (In Progress) or tag (...)
+  create:
+
+  # Useful for knowing when a branch is being actively developed on (In Progress) or merged to main (Ready for Testing)
+  push:
+    branches:
+      - main # move to "ready for testing" when merged to `main`                  # Target: Ready for Testing (on merge to main)
+      - "*" # move to "in progress" when a `feature branch` receives a push       # Target: In Progress (on push to feature branch)
+
+  # Useful for knowing when new PR is opened, move to "ready for code review"     # Target: Ready for Code Review (on PR open to main)
+  pull_request:
+    types:
+      - opened
+      - ready_for_review
+
+  pull_request_review:
+    types:
+      - submitted
+
+  pull_request_review_comment:
+    types:
+      - created
+
+jobs:
+  kanbanize:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: atb-ventures/.github/.github/actions/kanbanize@main
+        with:
+          kanbanize_api_key: ${{ secrets.KANBANIZE_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
