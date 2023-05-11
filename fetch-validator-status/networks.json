@@ -5,7 +5,7 @@
   },
   "atbvbn-local": {
     "name": "ATBV BuilderNet",
-    "genesisPath": "./genesis_files/pool_transactions_atbvbuildernet_genesis"
+    "genesisUrl": "file:///genesis_files/pool_transactions_atbvbuildernet_genesis"
   }
 }
 
