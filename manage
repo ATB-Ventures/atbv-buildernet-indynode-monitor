@@ -389,9 +389,7 @@ function writeEnvSeeds(){
 # Format:
 #   <Network_ID>_SEED=<Your_Seed>
 # -------------------------------------------------------
-SBN_SEED=
-SSN_SEED=
-SMN_SEED=
+ATBVBN_SEED=
 # =======================================================
 EOF
   )
