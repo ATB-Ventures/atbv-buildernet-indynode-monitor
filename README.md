@@ -1,6 +1,17 @@
 # Indy Node Monitor
 Cloned from [hyperledger/indy-node-monitor](https://github.com/hyperledger/indy-node-monitor)
 
+## How to run ATBV BuilderNet webserver
+```bash
+gcloud compute ssh atbv-ep-indymonitor-01 --project=atbv-ep-indynetwork-01 --zone=northamerica-northeast1-a --tunnel-through-iap
+
+sudo su -
+cd ~/github/atbv-buildernet-indynode-monitor
+
+./manage build
+./manage start
+```
+
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Lifecycle:Maturing](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
 

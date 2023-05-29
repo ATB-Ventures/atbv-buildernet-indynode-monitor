@@ -1,6 +1,15 @@
 # VON Network Webserver
 Cloned from [bcgov/von-network](https://github.com/bcgov/von-network)
 
+## How to run ATBV BuilderNet webserver
+```bash
+gcloud compute ssh atbv-ep-indymonitor-01 --project=atbv-ep-indynetwork-01 --zone=northamerica-northeast1-a --tunnel-through-iap
+
+sudo su -
+cd ~/github/atbv-buildernet-indynode-monitor/webserver
+
+./manage start-web GENESIS_URL=https://raw.githubusercontent.com/ATB-Ventures/atbv-buildernet-indynode-monitor/main/genesis_files/pool_transactions_atbvbuildernet_genesis LEDGER_SEED=NETWORK_SEED LEDGER_INSTANCE_NAME="ATBV BuilderNet"
+```
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Lifecycle:Stable](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
