@@ -1,0 +1,59 @@
+#This re-usable work flow is only for uncompiled languages and compiled languages that don't require special build steps
+name: Ventures Code Scanning (Public Repos)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]
+  schedule: #Code scanning will also run on a schedule (Sunday's @ 3:30AM)
+    - cron: '30 3 * * 0' 
+
+jobs:
+  create-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.languages }}
+    steps:
+      - name: Get languages from repo
+        id: set-matrix
+        uses: advanced-security/set-codeql-language-matrix@v1
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+          endpoint: ${{ github.event.repository.languages_url }}
+  analyze:
+    needs: create-matrix
+    if: ${{ needs.create-matrix.outputs.matrix != '[]' }}
+    name: Analyze
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    #Create Matrix based on Github API response
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ${{ fromJSON(needs.create-matrix.outputs.matrix) }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+
+    # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
+
+    #Perform CodeQL Analysis
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:${{matrix.language}}"
